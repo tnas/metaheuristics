@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1514140574 source:d:\myprojects\metaheuristics\main.cpp
+	<iostream>
+
+1571952557 source:d:\myprojects\metaheuristics\src\metaheuristic.cpp
+	"Metaheuristic.h"
+
+1571953749 d:\myprojects\metaheuristics\include\metaheuristic.h
+	"datasets/DataSet.h"
+
+1571943769 source:d:\myprojects\metaheuristics\src\tabusearch.cpp
+	"TabuSearch.h"
+
+1571952367 d:\myprojects\metaheuristics\include\tabusearch.h
+	"datasets/DataSet.h"
+
+1571952127 source:d:\myprojects\metaheuristics\src\datasets\dataset.cpp
+	"DataSet.h"
+
+1571952112 d:\myprojects\metaheuristics\include\datasets\dataset.h
+
+1571951763 source:d:\myprojects\metaheuristics\src\datasets\tspstardataset.cpp
+	"TSPStarDataSet.h"
+	"../../include/datasets/TSPStarDataSet.h"
+
+1571951884 d:\myprojects\metaheuristics\include\datasets\tspstardataset.h
+	"DataSet.h"
+
