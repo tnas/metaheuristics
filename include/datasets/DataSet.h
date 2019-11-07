@@ -9,8 +9,10 @@ class DataSet
         virtual ~DataSet();
         float** getCosts() const;
         unsigned int* getInitialSolution() const;
+        unsigned int getSolutionSize();
         virtual void buildCostsMatrix() = 0;
         virtual void buildInitialSolution() = 0;
+        virtual int* generateMovements(unsigned int numberOfMoves) = 0;
 
     protected:
         float** costs;

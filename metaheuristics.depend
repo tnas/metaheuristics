@@ -1,28 +1,36 @@
 # depslib dependency file v1.0
-1514140574 source:d:\myprojects\metaheuristics\main.cpp
-	<iostream>
+1573151671 source:d:\myprojects\metaheuristics\main.cpp
+	"include/Metaheuristic.h"
+	"include/TabuSearch.h"
+	"include/datasets/DataSet.h"
+	"include/datasets/TSPStarDataSet.h"
 
-1571952557 source:d:\myprojects\metaheuristics\src\metaheuristic.cpp
+1573148123 source:d:\myprojects\metaheuristics\src\metaheuristic.cpp
 	"Metaheuristic.h"
 
-1571953749 d:\myprojects\metaheuristics\include\metaheuristic.h
+1573157379 d:\myprojects\metaheuristics\include\metaheuristic.h
 	"datasets/DataSet.h"
 
-1571943769 source:d:\myprojects\metaheuristics\src\tabusearch.cpp
+1573159781 source:d:\myprojects\metaheuristics\src\tabusearch.cpp
 	"TabuSearch.h"
 
-1571952367 d:\myprojects\metaheuristics\include\tabusearch.h
-	"datasets/DataSet.h"
+1573159714 d:\myprojects\metaheuristics\include\tabusearch.h
+	"Metaheuristic.h"
+	<iostream>
+	<string.h>
 
-1571952127 source:d:\myprojects\metaheuristics\src\datasets\dataset.cpp
+1573155381 source:d:\myprojects\metaheuristics\src\datasets\dataset.cpp
 	"DataSet.h"
 
-1571952112 d:\myprojects\metaheuristics\include\datasets\dataset.h
+1573155567 d:\myprojects\metaheuristics\include\datasets\dataset.h
 
-1571951763 source:d:\myprojects\metaheuristics\src\datasets\tspstardataset.cpp
+1573160011 source:d:\myprojects\metaheuristics\src\datasets\tspstardataset.cpp
 	"TSPStarDataSet.h"
 	"../../include/datasets/TSPStarDataSet.h"
 
-1571951884 d:\myprojects\metaheuristics\include\datasets\tspstardataset.h
+1573160675 d:\myprojects\metaheuristics\include\datasets\tspstardataset.h
 	"DataSet.h"
+	<iostream>
+	<cstdlib>
+	<ctime>
 

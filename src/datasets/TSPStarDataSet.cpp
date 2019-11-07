@@ -129,5 +129,22 @@ void TSPStarDataSet::buildInitialSolution()
     this->initialSolution[10] = City::J;
 }
 
+int* TSPStarDataSet::generateMovements(unsigned int numberOfMoves)
+{
+    int* movements = new int[2*numberOfMoves]; // pair numbers (2n, 2n+1)
+    srand(time(NULL));
+
+    for (unsigned int m = 0; m < numberOfMoves; ++m)
+    {
+        movements[2*m] = movements[2*m+1] = std::rand() % TSPStarDataSet::DIMENSION;
+
+        while (movements[2*m] == movements[2*m+1])
+        {
+            movements[2*m+1] = std::rand() % TSPStarDataSet::DIMENSION;
+        }
+    }
+
+    return movements;
+}
 
 

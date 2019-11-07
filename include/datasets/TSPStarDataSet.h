@@ -2,21 +2,25 @@
 #define TSPSTARDATASET_H
 
 #include "DataSet.h"
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 class TSPStarDataSet : public DataSet
 {
     public:
-        enum City { A, B, C , D, E , F, G, H , I, J};
+        enum City { A, B, C, D, E, F, G, H, I, J };
 
-        TSPStarDataSet() : DataSet(DIMENSION, SOLUTION_SIZE) {};
+        TSPStarDataSet() : DataSet(TSPStarDataSet::DIMENSION, TSPStarDataSet::SOLUTION_SIZE) {};
         void buildCostsMatrix();
         void buildInitialSolution();
+        int* generateMovements(unsigned int numberOfMoves);
 
     protected:
 
     private:
-        const unsigned int DIMENSION = 10;
-        const unsigned int SOLUTION_SIZE = 11;
+        const static unsigned int DIMENSION = 10;
+        const static unsigned int SOLUTION_SIZE = 11;
 };
 
 #endif // TSPSTARDATASET_H

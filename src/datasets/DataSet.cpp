@@ -35,3 +35,8 @@ unsigned int* DataSet::getInitialSolution() const
 {
     return this->initialSolution;
 }
+
+unsigned int DataSet::getSolutionSize()
+{
+    return this->solutionSize;
+}
