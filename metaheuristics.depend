@@ -34,3 +34,41 @@
 	<cstdlib>
 	<ctime>
 
+1573212918 source:/home/thiago/projects/metaheuristics/main.cpp
+	"include/Metaheuristic.h"
+	"include/TabuSearch.h"
+	"include/datasets/DataSet.h"
+	"include/datasets/TSPStarDataSet.h"
+
+1573213839 /home/thiago/projects/metaheuristics/include/Metaheuristic.h
+	"datasets/DataSet.h"
+
+1573212572 /home/thiago/projects/metaheuristics/include/datasets/DataSet.h
+	<string>
+
+1573213795 /home/thiago/projects/metaheuristics/include/TabuSearch.h
+	"Metaheuristic.h"
+	<iostream>
+	<string.h>
+	<bits/stdc++.h>
+	<vector>
+
+1573212578 /home/thiago/projects/metaheuristics/include/datasets/TSPStarDataSet.h
+	"DataSet.h"
+	<iostream>
+	<cstdlib>
+	<ctime>
+
+1573208150 source:/home/thiago/projects/metaheuristics/src/datasets/DataSet.cpp
+	"DataSet.h"
+
+1573212584 source:/home/thiago/projects/metaheuristics/src/datasets/TSPStarDataSet.cpp
+	"TSPStarDataSet.h"
+	"../../include/datasets/TSPStarDataSet.h"
+
+1573206892 source:/home/thiago/projects/metaheuristics/src/Metaheuristic.cpp
+	"Metaheuristic.h"
+
+1573213861 source:/home/thiago/projects/metaheuristics/src/TabuSearch.cpp
+	"TabuSearch.h"
+

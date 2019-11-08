@@ -40,3 +40,8 @@ unsigned int DataSet::getSolutionSize()
 {
     return this->solutionSize;
 }
+
+unsigned int DataSet::getDimension()
+{
+    return this->dimension;
+}

@@ -147,4 +147,48 @@ int* TSPStarDataSet::generateMovements(unsigned int numberOfMoves)
     return movements;
 }
 
+string TSPStarDataSet::solutionToString(unsigned int* solution)
+{
+    string strSolution = "";
+
+    for (unsigned int i = 0; i < this->getSolutionSize(); ++i)
+    {
+        switch (solution[i])
+        {
+            case City::A :
+                strSolution += "A ";
+                break;
+            case City::B :
+                strSolution += "B ";
+                break;
+            case City::C :
+                strSolution += "C ";
+                break;
+            case City::D :
+                strSolution += "D ";
+                break;
+            case City::E :
+                strSolution += "E ";
+                break;
+            case City::F :
+                strSolution += "F ";
+                break;
+            case City::G :
+                strSolution += "G ";
+                break;
+            case City::H :
+                strSolution += "H ";
+                break;
+            case City::I :
+                strSolution += "I ";
+                break;
+            case City::J :
+                strSolution += "J ";
+                break;
+        }
+    }
+
+    return strSolution;
+}
+
 

@@ -6,8 +6,9 @@
 int main()
 {
     DataSet* ds = new TSPStarDataSet();
-    Metaheuristic* metaHeuristic = new TabuSearch(ds, 1, 3);
+    Metaheuristic* metaHeuristic = new TabuSearch(ds, 2000, 100);
     metaHeuristic->run();
+    metaHeuristic->printSolution();
 
     delete(metaHeuristic);
     delete(ds);

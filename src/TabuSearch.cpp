@@ -1,23 +1,33 @@
 #include "TabuSearch.h"
 
+TabuSearch::TabuSearch(DataSet* dataSet, unsigned int iterations, unsigned int movements) : Metaheuristic(iterations, movements)
+{
+    this->dataSet = dataSet;
+
+    // Allocating movementSolutions
+    this->movementSolutions = new unsigned int*[this->numberOfMovements];
+    for (unsigned int m = 0; m < this->numberOfMovements; ++m)
+        this->movementSolutions[m] = new unsigned int[this->dataSet->getSolutionSize()];
+    this->movFunctionVals = new double[this->numberOfMovements];
+}
+
+TabuSearch::~TabuSearch()
+{
+    // Deallocating movementSolutions
+    for (unsigned int m = 0; m < this->numberOfMovements; ++m)
+        delete(this->movementSolutions[m]);
+    delete(this->movementSolutions);
+    delete(this->movFunctionVals);
+}
+
 
 void TabuSearch::run()
 {
     unsigned int iteration = 0;
-    this->dataSet->buildInitialSolution();
-    unsigned int* currentSolution = this->dataSet->getInitialSolution();
-    cout << "Initial Solution: ";
-    this->printSolution(currentSolution);
-    cout << "9,3 (cost): " << this->dataSet->getCosts()[9][3] << endl;
+    this->currentSolution = this->dataSet->getInitialSolution();
+    this->currentFunctionVal = this->applyObjectiveFunction(currentSolution);
 
-    double currentFunctionVal = this->applyObjectiveFunction(currentSolution);
-    cout << "Initial Value: " << currentFunctionVal << endl;
-
-    // Allocating movementSolutions
-    unsigned int** movementSolutions = new unsigned int*[this->numberOfMovements];
-    for (unsigned int m = 0; m < this->numberOfMovements; ++m)
-        movementSolutions[m] = new unsigned int[this->dataSet->getSolutionSize()];
-    double* movFunctionVals = new double[this->numberOfMovements];
+    vector<vector<int>> tabuList;
 
     while (iteration < this->maxIterations)
     {
@@ -27,34 +37,44 @@ void TabuSearch::run()
 
         for (unsigned int m = 0; m < this->numberOfMovements; ++m)
         {
-            this->applyMovement(movements[2*m], movements[2*m+1], currentSolution, movementSolutions[m]);
-            cout << "Movement: (" << movements[2*m] << ", " << movements[2*m+1] << ")" << endl;
-            cout << "Movement Solution " << m << ": ";
-            this->printSolution(movementSolutions[m]);
-            movFunctionVals[m] = this->applyObjectiveFunction(movementSolutions[m]);
+            bool isMovementInTabuList = false;
+            for (vector<int> mov : tabuList)
+            {
+                if (mov.at(0) == movements[2*m] && mov.at(1) == movements[2*m+1])
+                {
+                    isMovementInTabuList = true;
+                    break;
+                }
+            }
+            if (isMovementInTabuList) continue;
 
-            if (movFunctionVals[m] < currentFunctionVal)
+            this->applyMovement(movements[2*m], movements[2*m+1], this->currentSolution, this->movementSolutions[m]);
+            this->movFunctionVals[m] = this->applyObjectiveFunction(this->movementSolutions[m]);
+
+            if (this->movFunctionVals[m] < this->currentFunctionVal)
                 bestIterSolution = m;
         }
 
         if (bestIterSolution != -1)
         {
-            currentFunctionVal = movFunctionVals[bestIterSolution];
-            memcpy(currentSolution, movementSolutions[bestIterSolution], this->dataSet->getSolutionSize()*sizeof(unsigned int));
+            this->currentFunctionVal = this->movFunctionVals[bestIterSolution];
+            memcpy(this->currentSolution, this->movementSolutions[bestIterSolution], this->dataSet->getSolutionSize()*sizeof(unsigned int));
+            vector<int> movement { movements[2*bestIterSolution], movements[2*bestIterSolution+1], TabuSearch::TABU_LIST_TIME };
+            tabuList.push_back(movement);
+        }
+
+        // Updating tabu list
+        int tabuPosition = 0;
+        for (vector<int> mov : tabuList)
+        {
+            --mov.at(2);
+            if (mov.at(2) == 0)
+                tabuList.erase(tabuList.begin() + tabuPosition);
+            ++tabuPosition;
         }
 
         delete(movements);
     }
-
-    // Deallocating movementSolutions
-    for (unsigned int m = 0; m < this->numberOfMovements; ++m)
-        delete(movementSolutions[m]);
-    delete(movementSolutions);
-    delete(movFunctionVals);
-
-    // Printing solution
-    cout << "Final Solution: ";
-    this->printSolution(currentSolution);
 }
 
 double TabuSearch::applyObjectiveFunction(unsigned int* solution)
@@ -63,8 +83,6 @@ double TabuSearch::applyObjectiveFunction(unsigned int* solution)
 
     for (unsigned int i = 0; i < this->dataSet->getSolutionSize()-1; ++i)
     {
-        cout << "Summing (" << solution[i] << ", " << solution[i+1] << "): " <<
-        this->dataSet->getCosts()[solution[i]][solution[i+1]] << endl;
         functionValue += this->dataSet->getCosts()[solution[i]][solution[i+1]];
     }
 
@@ -90,10 +108,9 @@ void TabuSearch::applyMovement(unsigned int from, unsigned int to, unsigned int*
     }
 }
 
-void TabuSearch::printSolution(unsigned int* solution)
+void TabuSearch::printSolution()
 {
-    for (unsigned int i = 0; i < this->dataSet->getSolutionSize(); ++i)
-        cout << solution[i] << " ";
-    cout << endl;
+    cout << "Final Solution: " << this->dataSet->solutionToString(this->currentSolution) << endl;
+    cout << "Final Value: " << this->currentFunctionVal << endl;
 }
 

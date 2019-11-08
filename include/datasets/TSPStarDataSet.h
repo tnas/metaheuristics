@@ -11,10 +11,15 @@ class TSPStarDataSet : public DataSet
     public:
         enum City { A, B, C, D, E, F, G, H, I, J };
 
-        TSPStarDataSet() : DataSet(TSPStarDataSet::DIMENSION, TSPStarDataSet::SOLUTION_SIZE) {};
+        TSPStarDataSet() : DataSet(TSPStarDataSet::DIMENSION, TSPStarDataSet::SOLUTION_SIZE)
+        {
+            this->buildCostsMatrix();
+            this->buildInitialSolution();
+        };
         void buildCostsMatrix();
         void buildInitialSolution();
         int* generateMovements(unsigned int numberOfMoves);
+        string solutionToString(unsigned int* solution);
 
     protected:
 

@@ -14,6 +14,7 @@ class Metaheuristic
         virtual double applyObjectiveFunction(unsigned int* solution) = 0;
         virtual void applyMovement(unsigned int from, unsigned int to,
                                    unsigned int* solution, unsigned int* newSolution) = 0;
+        virtual void printSolution() = 0;
 
     protected:
         unsigned int maxIterations;
