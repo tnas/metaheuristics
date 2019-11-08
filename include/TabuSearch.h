@@ -16,9 +16,6 @@ class TabuSearch : public Metaheuristic
         TabuSearch(DataSet* dataSet, unsigned int iterations, unsigned int movements);
         ~TabuSearch();
         void run();
-        double applyObjectiveFunction(unsigned int* solution);
-        void applyMovement(unsigned int from, unsigned int to,
-                           unsigned int* solution, unsigned int* newSolution);
         void printSolution();
 
     protected:

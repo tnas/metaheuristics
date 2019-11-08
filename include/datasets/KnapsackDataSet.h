@@ -1,14 +1,14 @@
-#ifndef TSPSTARDATASET_H
-#define TSPSTARDATASET_H
+#ifndef KNAPSACKDATASET_H
+#define KNAPSACKDATASET_H
 
 #include "DataSet.h"
 
-class TSPStarDataSet : public DataSet
+class KnapsackDataSet : public DataSet
 {
     public:
-        enum City { A, B, C, D, E, F, G, H, I, J };
+        enum Object { Weight, Value };
 
-        TSPStarDataSet() : DataSet(TSPStarDataSet::DIMENSION, TSPStarDataSet::SOLUTION_SIZE)
+        KnapsackDataSet() : DataSet(KnapsackDataSet::DIMENSION, KnapsackDataSet::DIMENSION)
         {
             this->buildCostsMatrix();
             this->buildInitialSolution();
@@ -16,6 +16,7 @@ class TSPStarDataSet : public DataSet
 
         void buildCostsMatrix();
         void buildInitialSolution();
+        double getKnapsackWeight(unsigned int* solution);
         double applyObjectiveFunction(unsigned int* solution);
         void applyMovement(unsigned int from, unsigned int to,
                            unsigned int* solution, unsigned int* newSolution);
@@ -26,8 +27,8 @@ class TSPStarDataSet : public DataSet
     protected:
 
     private:
-        const static unsigned int DIMENSION = 10;
-        const static unsigned int SOLUTION_SIZE = 11;
+        const static unsigned int DIMENSION = 15;
+        const static unsigned int MAX_WEIGHT = 275;
 };
 
-#endif // TSPSTARDATASET_H
+#endif // KNAPSACKDATASET_H

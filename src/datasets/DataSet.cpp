@@ -3,13 +3,6 @@
 DataSet::DataSet(unsigned int dimension, unsigned int solutionSize)
 {
     this->dimension = dimension;
-    this->costs = new float*[this->dimension];
-
-    for (unsigned int row = 0; row < this->dimension; ++row)
-    {
-        this->costs[row] = new float[this->dimension];
-    }
-
     this->solutionSize = solutionSize;
     this->initialSolution = new unsigned int[this->solutionSize];
 }
@@ -24,7 +17,6 @@ DataSet::~DataSet()
     delete(this->costs);
     delete(this->initialSolution);
 }
-
 
 float** DataSet::getCosts() const
 {

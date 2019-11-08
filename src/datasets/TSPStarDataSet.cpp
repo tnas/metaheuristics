@@ -3,6 +3,12 @@
 
 void TSPStarDataSet::buildCostsMatrix()
 {
+    this->costs = new float*[this->dimension];
+    for (unsigned int row = 0; row < this->dimension; ++row)
+    {
+        this->costs[row] = new float[this->dimension];
+    }
+
     this->costs[City::A][0] = 0.00;
     this->costs[City::A][1] = 3.70;
     this->costs[City::A][2] = 6.00;
@@ -129,6 +135,18 @@ void TSPStarDataSet::buildInitialSolution()
     this->initialSolution[10] = City::J;
 }
 
+double TSPStarDataSet::applyObjectiveFunction(unsigned int* solution)
+{
+    double functionValue = 0;
+
+    for (unsigned int i = 0; i < this->solutionSize-1; ++i)
+    {
+        functionValue += this->costs[solution[i]][solution[i+1]];
+    }
+
+    return functionValue;
+}
+
 int* TSPStarDataSet::generateMovements(unsigned int numberOfMoves)
 {
     int* movements = new int[2*numberOfMoves]; // pair numbers (2n, 2n+1)
@@ -147,11 +165,35 @@ int* TSPStarDataSet::generateMovements(unsigned int numberOfMoves)
     return movements;
 }
 
+void TSPStarDataSet::applyMovement(unsigned int from, unsigned int to, unsigned int* solution, unsigned int* newSolution)
+{
+    for (unsigned int i = 0; i < this->solutionSize; ++i)
+    {
+        if (solution[i] == from)
+        {
+            newSolution[i] = to;
+        }
+        else if (solution[i] == to)
+        {
+            newSolution[i] = from;
+        }
+        else
+        {
+            newSolution[i] = solution[i];
+        }
+    }
+}
+
+bool TSPStarDataSet::isImprovement(double iterationValue, double bestValue)
+{
+    return iterationValue < bestValue;
+}
+
 string TSPStarDataSet::solutionToString(unsigned int* solution)
 {
     string strSolution = "";
 
-    for (unsigned int i = 0; i < this->getSolutionSize(); ++i)
+    for (unsigned int i = 0; i < this->solutionSize; ++i)
     {
         switch (solution[i])
         {
