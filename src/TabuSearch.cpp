@@ -7,6 +7,10 @@ TabuSearch::TabuSearch(DataSet* dataSet, unsigned int iterations, unsigned int m
     for (unsigned int m = 0; m < this->numberOfMovements; ++m)
         this->movementSolutions[m] = new unsigned int[this->dataSet->getSolutionSize()];
     this->movFunctionVals = new double[this->numberOfMovements];
+
+    // Initial Solution
+    this->currentSolution = this->dataSet->getInitialSolution();
+    this->currentFunctionVal = this->dataSet->applyObjectiveFunction(currentSolution);
 }
 
 TabuSearch::~TabuSearch()
@@ -20,10 +24,6 @@ TabuSearch::~TabuSearch()
 void TabuSearch::run()
 {
     unsigned int iteration = 0;
-    this->currentSolution = this->dataSet->getInitialSolution();
-    this->currentFunctionVal = this->dataSet->applyObjectiveFunction(currentSolution);
-    this->printSolution();
-
     vector<vector<int>> tabuList;
 
     while (iteration < this->maxIterations)
@@ -55,15 +55,7 @@ void TabuSearch::run()
         if (bestIterSolution != -1)
         {
             this->currentFunctionVal = this->movFunctionVals[bestIterSolution];
-            cout << "Before: ";
-            for (unsigned int obj = 0; obj < this->dataSet->getSolutionSize(); ++obj)
-                cout << this->currentSolution[obj];
-            cout << endl;
             memcpy(this->currentSolution, this->movementSolutions[bestIterSolution], this->dataSet->getSolutionSize()*sizeof(unsigned int));
-            cout << "After: ";
-            for (unsigned int obj = 0; obj < this->dataSet->getSolutionSize(); ++obj)
-                cout << this->currentSolution[obj];
-            cout << endl;
             vector<int> movement { movements[2*bestIterSolution], movements[2*bestIterSolution+1], TabuSearch::TABU_LIST_TIME };
             tabuList.push_back(movement);
         }
@@ -84,6 +76,6 @@ void TabuSearch::run()
 
 void TabuSearch::printSolution()
 {
-    cout << "Final Solution: " << this->dataSet->solutionToString(this->currentSolution) << endl;
-    cout << "Final Value: " << this->currentFunctionVal << endl;
+    cout << "Solution: " << this->dataSet->solutionToString(this->currentSolution) << endl;
+    cout << "Value: " << this->currentFunctionVal << endl;
 }

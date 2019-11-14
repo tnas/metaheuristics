@@ -56,7 +56,7 @@ void KnapsackDataSet::buildCostsMatrix()
 
 void KnapsackDataSet::buildInitialSolution()
 {
-    srand(time(NULL));
+    srand((unsigned) time(0));
     unsigned int knapsackWeight = 0;
 
     for (unsigned int obj = 0; obj < this->solutionSize; ++obj)
@@ -97,7 +97,6 @@ double KnapsackDataSet::applyObjectiveFunction(unsigned int* solution)
 int* KnapsackDataSet::generateMovements(unsigned int numberOfMoves)
 {
     int* movements = new int[2*numberOfMoves]; // pair numbers (2n, 2n+1)
-    srand(time(NULL));
 
     for (unsigned int m = 0; m < numberOfMoves; ++m)
     {
@@ -114,17 +113,13 @@ int* KnapsackDataSet::generateMovements(unsigned int numberOfMoves)
 
 void KnapsackDataSet::applyMovement(unsigned int from, unsigned int to, unsigned int* solution, unsigned int* newSolution)
 {
-    //memcpy(newSolution, solution, this->solutionSize*sizeof(unsigned int));
-    for (unsigned int obj = 0; obj < this->solutionSize; ++obj)
-        newSolution[obj] = solution[obj];
-
+    memcpy(newSolution, solution, this->solutionSize*sizeof(unsigned int));
     newSolution[from] = !newSolution[from];
     newSolution[to] = !newSolution[to];
 
     if (this->getKnapsackWeight(newSolution) > KnapsackDataSet::MAX_WEIGHT)
     {
         // Undo the movement
-        cout << "Exploded!!!!" << endl;
         newSolution[from] = !newSolution[from];
         newSolution[to] = !newSolution[to];
     }
